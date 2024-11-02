@@ -95,7 +95,7 @@ require('lazy').setup {
   'tpope/vim-sleuth',
   'nvim-lua/plenary.nvim',
   {
-    'startup-nvim/startup.nvim',
+    'prcio/startup.nvim',
     requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
     config = function()
       require('startup').setup { theme = 'evil' }
