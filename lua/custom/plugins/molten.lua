@@ -5,7 +5,7 @@ return {
   build = ':UpdateRemotePlugins',
   init = function()
     vim.g.molten_image_provider = 'image.nvim'
-    vim.g.molten_output_win_max_height = 24
+    -- vim.g.molten_output_win_max_height =
     vim.g.molten_virt_text_output = true
     vim.g.molten_virt_lines_off_by_1 = true
     vim.g.molten_virt_text_max_lines = 1
