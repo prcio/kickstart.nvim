@@ -1,7 +1,6 @@
-tags
-test.sh
-.luarc.json
-nvim
-
+# Local preferences follow this folder when copied outside the dotfiles repo.
+local.lua
 spell/
-lazy-lock.json
+doc/tags
+*.log
+.DS_Store
