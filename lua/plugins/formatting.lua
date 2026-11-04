@@ -4,7 +4,11 @@ vim.pack.add { gh 'stevearc/conform.nvim' }
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
-    if vim.api.nvim_buf_get_name(bufnr):match '%.ipynb$' then return nil end
+    local name = vim.api.nvim_buf_get_name(bufnr)
+    if name:match '%.ipynb$' then return nil end
+    -- Vault notes are hand-kept and shared with the Obsidian app; format them only on request.
+    local vault = require('config.settings').vault
+    if vault and vim.fs.relpath(vim.fn.expand(vault), name) then return nil end
     local enabled_filetypes = {
       lua = true,
       python = true,

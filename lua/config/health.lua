@@ -37,6 +37,7 @@ function M.check()
       vim.health.info 'Install Skim and configure inverse search as described in README.md (not probed by launching apps).'
     end
   end
+  if settings.vault and vim.fn.isdirectory(vim.fn.expand(settings.vault)) ~= 1 then vim.health.info('Vault folder absent: Obsidian support skipped (' .. settings.vault .. ').') end
   if settings.ai and not platform.claude() then vim.health.info 'Claude executable absent: optional AI integration skipped.' end
   if settings.python_host and not platform.executable(settings.python_host) then vim.health.warn 'Configured Python provider is not executable.' end
   vim.health.info('Automatic tool/parser installation: ' .. tostring(settings.auto_install))

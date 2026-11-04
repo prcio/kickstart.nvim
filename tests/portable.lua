@@ -42,6 +42,12 @@ vim.fn.stdpath = function(kind) return kind == 'config' and scratch or stdpath(k
 vim.fn.writefile({ 'return { nerd_font = false, auto_install = false, viewer = "skim" }' }, scratch .. '/local.lua')
 local overridden = dofile(root .. '/lua/config/settings.lua')
 assert(not overridden.nerd_font and not overridden.auto_install and overridden.viewer == 'skim')
+vim.fn.writefile({ 'return { vault = false }' }, scratch .. '/local.lua')
+assert(dofile(root .. '/lua/config/settings.lua').vault == false)
+vim.fn.writefile({ 'return { vault = "~/Notes" }' }, scratch .. '/local.lua')
+assert(dofile(root .. '/lua/config/settings.lua').vault == '~/Notes')
+vim.fn.writefile({ 'return { vault = 1 }' }, scratch .. '/local.lua')
+assert(not pcall(dofile, root .. '/lua/config/settings.lua'))
 vim.fn.writefile({ 'return { typo = true }' }, scratch .. '/local.lua')
 assert(not pcall(dofile, root .. '/lua/config/settings.lua'))
 vim.fn.stdpath = stdpath

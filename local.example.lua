@@ -5,6 +5,7 @@ return {
   latex = true,
   ai = true,
   viewer = 'auto',
+  -- vault = '/absolute/path/to/vault', -- Obsidian vault folder; ~ works too
   -- python_host = '/absolute/path/to/venv/bin/python',
   -- claude = '/absolute/path/to/claude',
 }

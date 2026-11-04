@@ -85,7 +85,7 @@ nvim-pack-lock.json       shared plugin revisions
 Copy `local.example.lua` to `local.lua` for machine-specific preferences. It is
 ignored by Git. Shared defaults live in `lua/config/settings.lua`; unknown keys
 or wrong types fail clearly. Options: `nerd_font`, `auto_install`, `latex`, `ai`,
-`viewer`, `python_host`, `claude`. Native Python editing uses project environments;
+`viewer`, `python_host`, `claude`, `vault`. Native Python editing uses project environments;
 a Python provider is optional and only set when an explicit executable exists.
 Claude integration is loaded only if its executable is found; no login is done.
 Molten/notebook integration is not loaded. Historical notebook entries are retained
@@ -95,6 +95,16 @@ registered from older installations. Use Jupyter or Code for notebooks.
 
 `auto_install=false` disables automatic Mason tool and Treesitter parser installs,
 not vim.pack plugin bootstrap. For offline use, provision plugins/tools first.
+
+## Obsidian vault
+
+`lua/custom/plugins/obsidian.lua` adds `[[` note completion, following links and
+vault search (`Space v`). It is off by default. To turn it on for a machine, set the
+vault's folder in `local.lua`, for example `return { vault = '~/path/to/vault' }`. The
+plugin expects a `Main Notes` folder for new notes. The Obsidian app stays in charge
+of note structure: this config doesn't rewrite frontmatter, apply templates or sync,
+and format-on-save skips the vault. Rename notes with `:Obsidian rename` or in the
+app, since a plain `mv` breaks links.
 
 ## Same LaTeX workflow, native viewers
 

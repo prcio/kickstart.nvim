@@ -7,6 +7,7 @@ local defaults = {
   viewer = 'auto', -- Skim on macOS, zathura_simple on Linux.
   python_host = false, -- Optional absolute path to a Python with pynvim installed.
   claude = false, -- Optional executable override; otherwise discovered on PATH.
+  vault = false, -- Obsidian vault folder, set per machine in local.lua; false or a missing folder skips vault support.
 }
 local path = vim.fs.joinpath(vim.fn.stdpath 'config', 'local.lua')
 if vim.uv.fs_stat(path) then
@@ -17,6 +18,8 @@ if vim.uv.fs_stat(path) then
     local value = overrides[key]
     if key == 'python_host' or key == 'claude' then
       if value ~= false and type(value) ~= 'string' then error(key .. ' must be false or an executable path') end
+    elseif key == 'vault' then
+      if value ~= false and type(value) ~= 'string' then error('vault must be false or a folder path') end
     elseif type(value) ~= type(defaults[key]) then
       error('Wrong type for local.lua setting: ' .. key)
     end
