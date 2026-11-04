@@ -107,7 +107,7 @@ local ensure_installed = vim.tbl_keys(servers or {})
 vim.list_extend(ensure_installed, {
   'isort',
   'black',
-  'markdownlint', -- used by kickstart.plugins.lint
+  'markdownlint', -- Markdown formatter in plugins.formatting
 })
 
 require('mason-tool-installer').setup {
