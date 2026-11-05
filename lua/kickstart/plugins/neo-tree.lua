@@ -10,6 +10,22 @@ vim.pack.add {
 vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal', silent = true })
 
 require('neo-tree').setup {
+  event_handlers = {
+    -- Open PDFs in a real viewer instead of as a buffer. Zathura is named directly because
+    -- the desktop default for PDFs may be a browser; vim.ui.open covers machines without it.
+    {
+      event = 'file_open_requested',
+      handler = function(args)
+        if vim.fn.fnamemodify(args.path, ':e'):lower() ~= 'pdf' then return end
+        if vim.fn.executable 'zathura' == 1 then
+          vim.system({ 'zathura', args.path }, { detach = true })
+        else
+          vim.ui.open(args.path)
+        end
+        return { handled = true }
+      end,
+    },
+  },
   filesystem = {
     window = {
       mappings = {
