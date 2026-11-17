@@ -96,6 +96,14 @@ registered from older installations. Use Jupyter or Code for notebooks.
 `auto_install=false` disables automatic Mason tool and Treesitter parser installs,
 not vim.pack plugin bootstrap. For offline use, provision plugins/tools first.
 
+## Split resizing
+
+In normal mode, **Ctrl+Up/Down** increases/decreases the current split's height by
+two rows; **Ctrl+Right/Left** increases/decreases its width by two columns.
+The built-in **Ctrl+W + / - / > / < / =** commands still work, and **Ctrl+H/J/K/L**
+still moves between splits. Reload mappings with `:lua dofile(vim.fn.stdpath('config') .. '/lua/config/keymaps.lua')`
+or open a new Neovim session.
+
 ## Obsidian vault
 
 `lua/custom/plugins/obsidian.lua` adds `[[` note completion, following links and
