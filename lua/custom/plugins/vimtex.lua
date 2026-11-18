@@ -25,6 +25,9 @@ vim.g.vimtex_quickfix_open_on_warning = 0
 -- <space>lv is replaced below so that "view" also builds (saving alone never compiles).
 vim.g.vimtex_mappings_disable = { n = { '<localleader>lv' } }
 
+-- Fog syntax colors and selective conceal (sets vimtex_syntax_conceal, so before pack.add).
+require('custom.tex_highlights').setup()
+
 vim.pack.add { 'https://github.com/lervag/vimtex' }
 
 -- <space>lv: if no continuous build is running, start one; VimTeX opens zathura by itself
