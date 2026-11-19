@@ -6,6 +6,8 @@
 --   <space>lv  build-and-view: starts the continuous build if it isn't running (zathura opens
 --              after the first successful build), else shows the cursor position in zathura
 --   <space>lk  stop compilation, <space>lc  clean aux files, <space>le  show errors
+--   <space>li  insert menu: f figure, s subfigures, t table, e equation, a align,
+--              i itemize, n enumerate, b any environment (<space>lI = VimTeX info)
 --   Ctrl+click in zathura: inverse search, jumps to that line in Neovim
 --
 -- Shell escape stays off (VimTeX's latexmk defaults); minted works via TeX Live's
@@ -23,12 +25,17 @@ vim.g.vimtex_view_method = require('config.platform').viewer()
 vim.g.vimtex_quickfix_open_on_warning = 0
 
 -- <space>lv is replaced below so that "view" also builds (saving alone never compiles).
-vim.g.vimtex_mappings_disable = { n = { '<localleader>lv' } }
+-- <space>li (compact info) is freed for the insert menu; <space>lI (full info) remains.
+vim.g.vimtex_mappings_disable = { n = { '<localleader>lv', '<localleader>li' } }
 
 -- Fog syntax colors and selective conceal (sets vimtex_syntax_conceal, so before pack.add).
 require('custom.tex_highlights').setup()
 
 vim.pack.add { 'https://github.com/lervag/vimtex' }
+
+-- Insert snippets: typed triggers (fig, tab, eq, …) appear in the completion menu.
+local tex_snippets = require 'custom.snippets.tex'
+require('luasnip').add_snippets('tex', tex_snippets.snippets(), { key = 'custom-tex' })
 
 -- <space>lv: if no continuous build is running, start one; VimTeX opens zathura by itself
 -- after the first successful build (g:vimtex_view_automatic). Otherwise forward-search.
@@ -45,7 +52,15 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.cmd 'VimtexCompile'
       end
     end, { buffer = args.buf, desc = 'VimTeX: build (if needed) and view' })
+
+    -- <space>li + key inserts an environment (see custom/snippets/tex.lua for the list).
+    for _, d in ipairs(tex_snippets.defs) do
+      vim.keymap.set('n', '<localleader>li' .. d.key, function() tex_snippets.insert(d.snip) end, { buffer = args.buf, desc = 'Insert ' .. d.name })
+    end
   end,
 })
 
-require('which-key').add { { '<localleader>l', group = '[L]aTeX (VimTeX)', mode = { 'n', 'x' } } }
+require('which-key').add {
+  { '<localleader>l', group = '[L]aTeX (VimTeX)', mode = { 'n', 'x' } },
+  { '<localleader>li', group = '[I]nsert environment' },
+}
